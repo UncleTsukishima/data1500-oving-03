@@ -103,3 +103,59 @@ WHERE table_schema = 'public'
 ORDER BY table_name, constraint_name;
 
 SELECT 'Alle tester fullført!' as result;
+
+--Oppgave 1
+SELECT s.fornavn, s.etternavn, COUNT(er.registrering_id) AS antall_emner
+FROM studenter s
+LEFT JOIN emneregistreringer er ON s.student_id = er.student_id
+GROUP BY s.student_id, s.fornavn, s.etternavn
+HAVING COUNT(er.registrering_id) = 0
+ORDER BY s.student_id DESC;
+
+--Oppgave2
+SELECT
+    e.emne_id,
+    e.emne_kode,
+    e.emne_navn
+FROM emner e
+LEFT JOIN emneregistreringer er ON e.emne_id = er.emne_id
+WHERE er.emne_id IS NULL;
+
+--Opppgave3
+SELECT
+    e.emne_navn,
+    MIN(er.karakter) AS hoyest_karakter
+FROM emneregistreringer er
+     JOIN emner e ON er.emne_id = e.emne_id
+WHERE er.karakter IS NOT NULL
+GROUP BY e.emne_id, e.emne_navn;
+
+--Oppgave4
+SELECT
+    s.fornavn,
+    s.etternavn,
+    p.program_navn,
+    e.emne_navn
+FROM studenter s
+LEFT JOIN programmer p
+    ON s.program_id = p.program_id
+LEFT JOIN emneregistreringer er
+    ON s.student_id = er.student_id
+LEFT JOIN emner e
+    ON er.emne_id = e.emne_id
+ORDER BY s.fornavn, s.etternavn;
+
+--Oppgave5
+SELECT
+    s.student_id,
+    s.fornavn,
+    s.etternavn
+FROM studenter s
+JOIN emneregistreringer er
+    ON s.student_id = er.student_id
+WHERE er.emne_id IN (1, 2)
+GROUP BY s.student_id, s.fornavn, s.etternavn
+HAVING COUNT(DISTINCT er.emne_id) = 2;
+
+
+

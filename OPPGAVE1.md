@@ -1,4 +1,4 @@
-# Oppgave 1: Docker-oppsett og PostgreSQL-tilkobling
+qqqq# Oppgave 1: Docker-oppsett og PostgreSQL-tilkobling
 
 ## Læringsmål
 
